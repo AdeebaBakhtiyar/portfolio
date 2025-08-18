@@ -337,6 +337,16 @@ body{
     margin: 32px 84px
 }
 
+.hero-highlight a {
+  color: #0d0602;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hero-highlight a:hover {
+  color: #0b0501;
+}
+
 /* About info list styling */
 .info {
     list-style: none; /* Remove default list styling */
