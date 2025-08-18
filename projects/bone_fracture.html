@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Bone Fracture Detection & Surgical Guidance</title>
+  <link rel="stylesheet" href="bone-frac.css" />
+  <meta name="description" content="AI-Powered Real-Time Bone Fracture Detection & Surgical Guidance System with Fracture Angle Estimation using YOLOv8, OpenCV, and FastAPI." />
+</head>
+<body>
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <div class="container">
+      <h1 class="brand">AI Bone Fracture Detection & Surgical Guidance</h1>
+      <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Core Features</a>
+        <a href="#tech">Tech Stack</a>
+        <a href="#results">Results</a>
+        <a href="#deployment">Deployment</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">End-to-end Clinical AI • Computer Vision • Real-time</p>
+      <h2 class="title">
+        Real-Time Fracture Detection, Fragment Identification & Angle Estimation with YOLOv8
+      </h2>
+      <p class="subtitle">
+        Built an end-to-end medical imaging pipeline for orthopedic diagnostics and intraoperative guidance—combining deep learning, geometric vision, and deployable APIs.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#results">See Results</a>
+        <a class="btn ghost" href="#architecture">Architecture</a>
+      </div>
+      <figure class="hero-media">
+        <img src="result-fracture.png" alt="Demo: X-ray with detections and angle overlay" />
+        <figcaption>Sample output: fracture & fragments detected with precise angle overlay.</figcaption>
+        <a href="https://huggingface.co/spaces/adeebaai/bone-fracture-detection">Check the Live Demo</a>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Overview -->
+  <section id="overview" class="section">
+    <div class="container narrow">
+      <h3>Overview</h3>
+      <p>
+        This project delivers a <strong>state-of-the-art AI solution</strong> for rapid, accurate <strong>bone fracture detection</strong>, <strong>fragment identification</strong>, <strong>surgical tool detection</strong>, and <strong>fracture angle estimation</strong>. It reduces diagnostic time, improves surgical planning, and supports post-operative monitoring.
+      </p>
+      <div class="grid-3">
+        <div class="stat">
+          <span class="stat-num">~14ms</span>
+          <span class="stat-label">Avg Inference / Image*</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">mAP@0.5</span>
+          <span class="stat-label">High detection accuracy*</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">End-to-End</span>
+          <span class="stat-label">Data → Model → API → UI</span>
+        </div>
+      </div>
+      <p class="footnote">*Performance Metrics for evaluation</p>
+    </div>
+  </section>
+
+  <!-- Problem & Impact -->
+  <section class="section tint">
+    <div class="container narrow">
+      <h3>Problem & Impact</h3>
+      <p>
+        Manual fracture assessment is time-sensitive and prone to variability. During surgery, angle misestimation can impact fixation outcomes. This system augments radiologists and surgeons with <strong>instant, quantitative insights</strong>, improving consistency and efficiency across the workflow.
+      </p>
+      <ul class="bullets">
+        <li><strong>Clinical relevance:</strong> Quantitative geometry for precision-driven surgeries.</li>
+        <li><strong>Speed:</strong> AI-assisted detection within seconds.</li>
+        <li><strong>Accessibility:</strong> Runs on modest GPUs or cloud endpoints.</li>
+        <li><strong>Scalability:</strong> Extensible to different bones and pediatric use-cases.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section id="architecture" class="section">
+    <div class="container">
+      <h3>System Architecture</h3>
+      <p class="center">
+        High-level flow: Input X-ray → Preprocess → YOLOv8 Detection (fracture, fragments, tools) → Postprocess → Angle Estimation → Output Overlays & Metrics
+      </p>
+      <figure class="card media">
+        <img src="assets/architecture_diagram.png" alt="System architecture diagram" />
+        <figcaption>Overview of data flow and components.</figcaption>
+      </figure>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4>Model</h4>
+          <ul class="tight">
+            <li>YOLOv8 (PyTorch) for object detection</li>
+            <li>Custom anchors & tuned hyperparameters</li>
+            <li>Augmentations: rotate/scale/blur/noise</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Angle Estimation</h4>
+          <ul class="tight">
+            <li>Keypoint/line extraction (OpenCV)</li>
+            <li>Vector geometry & robust thresholding</li>
+            <li>Overlay rendering with sub-degree precision</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dataset -->
+  <section class="section tint">
+    <div class="container">
+      <h3>Dataset & Annotations</h3>
+      <p>
+        Trained and validated on a curated medical imaging set with <strong>fractured</strong> and <strong>non-fractured</strong> X-rays. Annotations available in <strong>YOLO</strong>, <strong>COCO</strong>, <strong>PASCAL VOC</strong>, and <strong>VGG JSON</strong> formats. Balanced splits for train/val/test.
+      </p>
+      <div class="grid-3">
+        <figure class="card media">
+          <img src="non-frac.jpg" alt="Non-fractured X-ray" />
+          <figcaption>Non-fractured sample.</figcaption>
+        </figure>
+        <figure class="card media">
+          <img src="bbx.jpg" alt="Annotated fractured X-ray" />
+          <figcaption>Fractured sample with boxes.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Features -->
+  <section id="features" class="section">
+    <div class="container">
+      <h3>Core Features</h3>
+      <div class="grid-2">
+        <div class="card">
+          <h4>Fracture Detection</h4>
+          <p>Localizes fracture regions in real time with confidence scores and class labels.</p>
+        </div>
+        <div class="card">
+          <h4>Fragment Identification</h4>
+          <p>Finds displaced fragments to support complex surgical planning.</p>
+        </div>
+        
+        <div class="card">
+          <h4>Fracture Angle Estimation</h4>
+          <p>Computes alignment angles using geometric vision; overlays for quick surgeon review.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Graphs -->
+  <section class="section tint">
+    <div class="container">
+      <h3>Training & Evaluation</h3>
+      <div class="grid-3">
+        <figure class="card media">
+          <img src="metrics curve.png" alt="mAP curve over epochs" />
+          <figcaption>mAP over epochs.</figcaption>
+        </figure>
+        <figure class="card media">
+          <img src="loss curve.png" alt="Loss curves" />
+          <figcaption>Box/obj/cls losses.</figcaption>
+        </figure>
+      </div>
+
+     <section id="results" class="results">
+  <h2>Model Comparison & Results</h2>
+  <p>
+    We evaluated multiple YOLOv8 variants (<strong>n, s, m</strong>) on the
+    annotated <em>FracAtlas dataset</em>. Among them, <strong>YOLOv8s</strong>
+    delivered the best trade-off between speed and accuracy.
+  </p>
+
+  <div class="results-metrics">
+    <h3>YOLOv8s Performance Metrics</h3>
+    <ul>
+      <li><strong>Precision:</strong> 0.61</li>
+      <li><strong>Recall:</strong> 0.50</li>
+      <li><strong>mAP@50:</strong> 0.47</li>
+      <li><strong>mAP@50–95:</strong> 0.24</li>
+      <li><strong>Inference Speed:</strong> ~14.8 ms/image</li>
+    </ul>
+  </div>
+
+  <p>
+    These results establish YOLOv8s as the most
+    <strong>efficient and accurate</strong> model for real-time
+    <strong>bone fracture detection</strong>.
+  </p>
+</section>
+
+  <!-- Code Snippets -->
+  <section class="section" id="tech">
+    <div class="container">
+      <h3>Tech Stack & Key Snippets</h3>
+      <div class="grid-2">
+        <div class="card">
+          <h4>Tech Stack</h4>
+          <ul class="tight">
+            <li><strong>Deep Learning:</strong> YOLOv8, PyTorch</li>
+            <li><strong>Vision:</strong> OpenCV, NumPy</li>
+            <li><strong>Serving:</strong> FastAPI / Flask</li>
+            <li><strong>Env:</strong> Google Colab, VS Code</li>
+            <li><strong>Data:</strong> YOLO/COCO</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>YOLOv8 Train Command</h4>
+<pre class="code"><code># Example training (replace with your paths)
+yolo task=detect mode=train model=yolov8s.pt \
+  data=data.yaml imgsz=1024 epochs=80 batch=16 \
+  augment=True cos_lr=True device=0 \
+  project=runs name=fracture_yolov8</code></pre>
+        </div>
+
+        <div class="card">
+          <h4>Angle Estimation (OpenCV)</h4>
+<pre class="code"><code>import cv2, numpy as np
+def angle_between(p1, p2, p3):
+    v1 = np.array(p1) - np.array(p2)
+    v2 = np.array(p3) - np.array(p2)
+    cosang = np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2) + 1e-8)
+    return np.degrees(np.arccos(np.clip(cosang, -1, 1)))</code></pre>
+        </div>
+
+        <div class="card">
+          <h4>FastAPI Inference Endpoint</h4>
+<pre class="code"><code>from fastapi import FastAPI, UploadFile
+app = FastAPI()
+@app.post("/predict")
+async def predict(file: UploadFile):
+    # read → preprocess → model → postprocess → return JSON
+    return {"boxes": [], "labels": [], "angles": []}</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section id="results" class="section tint">
+    <div class="container">
+      <h3>Qualitative Results</h3>
+      <div class="grid-3">
+        <figure class="card media">
+          <img src="non-frac.jpg" alt="Non-fractured X-ray" />
+          <figcaption>X-Ray image.</figcaption>
+        </figure>
+        <figure class="card media">
+          <img src="bbx.jpg" alt="Annotated fractured X-ray" />
+          <figcaption>Fracture Detection.</figcaption>
+        </figure>
+        <figure class="card media">
+          <img src="bone-angle.jpg" alt="Angle Calculation" />
+          <figcaption>Fracture Severity Calculation.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deployment -->
+<section id="deployment" class="section">
+  <div class="container">
+    <h3>Deployment & Integration</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Flask API Endpoints</h4>
+        <ul class="tight">
+          <li><code>/upload</code> → Accepts X-ray images (JPG/PNG)</li>
+          <li><code>/predict</code> → Returns detection results in JSON</li>
+          <li>Outputs include bounding boxes, confidence scores & fracture angles</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Performance & Optimization</h4>
+        <p>Deployed using Flask.  
+        Average response time: <strong>~17ms/image</strong>.  
+        Optimized with batch inference & NumPy-based postprocessing.</p>
+      </div>
+    </div>
+    <figure class="card media">
+      <img src="image.png" alt="Flask web UI screenshot" />
+      <figcaption>Prototype Flask web interface for uploading X-rays & visualizing overlays.</figcaption>
+    </figure>
+  </div>
+</section>
+
+  <!-- Recruiter Impression -->
+  <section class="section tint">
+    <div class="container narrow">
+      <h3>Recruiter’s Take</h3>
+      <p>
+        Demonstrates <strong>full-stack AI engineering</strong>—from dataset curation and model optimization to deployable APIs and clinician-facing UX. Clear evidence of <strong>practical problem solving</strong>, <strong>clinical domain adaptation</strong>, and <strong>end-to-end ownership</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <footer id="contact" class="site-footer">
+    <div class="container narrow center">
+      <p><strong>Want to review the code or discuss integration?</strong></p>
+      <p>"https://adeebabakhtiyar.github.io/portfolio/"</p>
+      <p class="tiny">© AdeebaBakhtiyar — AI/ML Engineer</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Seed Species Classification (Barley) — Project Showcase</title>
+  <link rel="stylesheet" href="barley-species.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <div class="hero-left">
+        <h1>Seed Species Classification — Barley</h1>
+        <p class="tagline">Automated barley seed identification using image segmentation, feature engineering, and classical ML.</p>
+        <div class="meta">
+          <span class="pill">Problem domain: Agriculture / Quality Control</span>
+          <span class="pill">Status: Prototype (models trained, not deployed)</span>
+          <span class="pill">Tech: Python • OpenCV • scikit-learn • Keras</span>
+        </div>
+      </div>
+      <figure class="hero-image">
+        <!-- Replace src with your representative image; small gap between image & text kept -->
+        <img src="Class_3_1_seed_5.png" alt="Segmented barley seeds sample" />
+        <figcaption>Sample segmented barley seeds (segmentation output)</figcaption>
+      </figure>
+    </header>
+
+    <section class="overview card">
+      <h2>Project Overview</h2>
+      <p>
+        This project builds a reliable pipeline for automated classification of barley seed species from raw images.
+        The core objective was to transform raw CR2-format images containing multiple seeds into a clean, feature-rich dataset
+        and train multiple classification models to achieve robust recognition suitable for agricultural quality control and research.
+      </p>
+    </section>
+
+    <section class="challenge card">
+      <h2>Challenge & Motivation</h2>
+      <p>
+        Manual seed classification is time-consuming, subjective, and costly. The dataset consisted of high-resolution raw images with
+        multiple seeds per frame and no pre-applied labels. The challenge required robust segmentation, precise feature extraction,
+        and model comparison that balances accuracy, interpretability, and computational efficiency.
+      </p>
+    </section>
+
+    <section class="pipeline card">
+      <h2>End-to-End Methodology</h2>
+
+      <h3>1. Data Ingestion & Preprocessing</h3>
+      <ul>
+        <li>Converted CR2 files into actionable image formats and standardized resolution/lighting where necessary.</li>
+        <li>Applied background reduction and normalization to improve segmentation consistency.</li>
+      </ul>
+
+      <h3>2. Segmentation & Instance Extraction</h3>
+      <ul>
+        <li>Used color-thresholding, morphological operations, and contour detection to isolate each seed.</li>
+        <li>Saved each detected seed as a separate sample for downstream feature extraction.</li>
+      </ul>
+
+      <h3>3. Feature Engineering</h3>
+      <ul>
+        <li>Shape features: aspect ratio, roundness, compactness, eccentricity, area, perimeter.</li>
+        <li>Texture descriptors: LBP (Local Binary Patterns), Haralick features (GLCM).</li>
+        <li>Color descriptors: RGB/histogram statistics, normalized color ratios.</li>
+      </ul>
+
+      <h3>4. Models Implemented & Compared</h3>
+      <ul>
+        <li><strong>Artificial Neural Network (ANN)</strong> — handled nonlinear relationships; useful with more data and augmentation.</li>
+        <li><strong>Random Forest</strong> — strong baseline with good interpretability and feature importance diagnostics.</li>
+        <li><strong>Support Vector Machine (SVM)</strong> — effective for smaller, high-dimensional feature sets.</li>
+        <li><strong>Logistic Regression</strong> — lightweight baseline to measure incremental gains.</li>
+        <li><strong>Extra Trees (Extreme Randomized Trees)</strong> — fast ensemble variant offering robustness against noise.</li>
+      </ul>
+    </section>
+
+    <section class="evaluation card">
+      <h2>Evaluation Strategy</h2>
+      <p>
+        Data was split into training and test sets. Evaluation included accuracy, precision/recall, F1-score, and confusion matrices.
+        Cross-validation and hyperparameter tuning (grid/random search) were applied where appropriate to ensure robust comparison.
+      </p>
+
+      <div class="result-highlights">
+        <h3>Key Findings</h3>
+        <ul>
+          <li>SVM and Random Forest emerged as the most consistent performers on the engineered feature set, offering a balance between accuracy and robustness.</li>
+          <li>ANN showed promise for deeper feature learning but required more data/augmentation and careful hyperparameter tuning to outperform classical models.</li>
+          <li>Segmentation quality directly influenced classification performance — careful morphological post-processing improved downstream accuracy significantly.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="impact card">
+      <h2>Project Impact & Use Cases</h2>
+      <p>
+        This pipeline can be integrated into seed testing labs and agricultural supply chains to:
+      </p>
+      <ul>
+        <li>Automate seed purity and species verification procedures.</li>
+        <li>Accelerate research workflows for plant breeders and agronomists.</li>
+        <li>Reduce human error and operational costs for routine quality checks.</li>
+      </ul>
+    </section>
+
+    <section class="tech card">
+      <h2>Tech Stack & Tools</h2>
+      <div class="stack-grid">
+        <div><strong>Languages:</strong> Python</div>
+        <div><strong>CV & Imaging:</strong> OpenCV, scikit-image</div>
+        <div><strong>ML Frameworks:</strong> scikit-learn, TensorFlow / Keras</div>
+        <div><strong>Data:</strong> NumPy, Pandas</div>
+        <div><strong>Visualization:</strong> Matplotlib, Seaborn</div>
+        <div><strong>Development:</strong> Jupyter, Git</div>
+      </div>
+    </section>
+
+    <section class="next card">
+      <h2>Next Steps / Roadmap</h2>
+      <ol>
+        <li>Expand dataset (more species, varied imaging conditions) and apply augmentation for ANN/CNN training.</li>
+        <li>Implement transfer learning with CNN backbones for direct image-based classification (reduce manual feature engineering).</li>
+        <li>Build a lightweight deployment (Streamlit/Flask) for live inference and QA workflows.</li>
+        <li>Add active learning loops to iteratively improve labeling quality with user-in-the-loop corrections.</li>
+      </ol>
+    </section>
+
+    <section class="reflection card">
+      <h2>Reflection</h2>
+      <p>
+        Working with raw, multi-seed CR2 images sharpened my skills in practical data engineering and computer vision.
+        The project reinforced that careful preprocessing and domain-aware feature engineering often matter more than model complexity,
+        especially with limited labeled data. My approach prioritized reproducible pipelines, clear evaluation, and model interpretability —
+        qualities I bring to professional AI engineering roles.
+      </p>
+    </section>
+
+    <footer class="contact card">
+      <div>
+        <strong>Recruiter Note:</strong>
+        <p>
+          Candidate demonstrated end-to-end ML engineering capability: data acquisition/cleaning, robust CV preprocessing, feature engineering,
+          comparative modeling, and a pragmatic roadmap toward production. Ready to scale this work into a deployed product and expand into CNN/transfer-learning approaches.
+        </p>
+      </div>
+
+      <div class="cta">
+        <p><strong>Contact:</strong> Adeeba Bakhtiyar</p>
+        <p><strong>Available for:</strong> Internships, Research Collaborations, Early-stage ML Engineering roles</p>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
